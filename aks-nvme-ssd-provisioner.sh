@@ -14,10 +14,10 @@ STRIPE_WIDTH=$(expr $SSD_NVME_DEVICE_COUNT \* $STRIDE || true)
 
 
 # Checking if provisioning already happend
-if [[ "$(ls -A /pv-disks)" ]]
+if [[ "$(ls -A /media/disks)" ]]
 then
-  echo 'Volumes already present in "/pv-disks"'
-  echo -e "\n$(ls -Al /pv-disks | tail -n +2)\n"
+  echo 'Volumes already present in "/media/disks"'
+  echo -e "\n$(ls -Al /media/disks | tail -n +2)\n"
   echo "I assume that provisioning already happend, doing nothing!"
   sleep infinity
 fi
