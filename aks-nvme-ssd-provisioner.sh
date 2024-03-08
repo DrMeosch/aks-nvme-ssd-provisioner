@@ -49,17 +49,17 @@ esac
 UUID=$(blkid -s UUID -o value $DEVICE)
 mkdir -p /media/$UUID
 mount -o defaults,noatime,discard,nobarrier --uuid $UUID /media/$UUID
-echo "UUID=$UUID /media/$UUID ext4 defaults 0 2" | sudo tee -a /etc/fstab
+echo "UUID=$UUID /media/$UUID ext4 defaults 0 2" | tee -a /etc/fstab
 echo "Device $DEVICE has been mounted to /media/$UUID"
 
 # https://github.com/kubernetes-sigs/sig-storage-local-static-provisioner/blob/master/docs/operations.md#sharing-a-disk-filesystem-by-multiple-filesystem-pvs
 for i in $(seq 1 20); do
-  sudo mkdir -p /media/${UUID}/vol${i} /media/disks/${UUID}_vol${i}
-  sudo mount --bind /media/${UUID}/vol${i} /media/disks/${UUID}_vol${i}
+  mkdir -p /media/${UUID}/vol${i} /media/disks/${UUID}_vol${i}
+  mount --bind /media/${UUID}/vol${i} /media/disks/${UUID}_vol${i}
 done
 
 for i in $(seq 1 20); do
-  echo "/media/${UUID}/vol${i} /media/disks/${UUID}_vol${i} none bind 0 0" | sudo tee -a /etc/fstab
+  echo "/media/${UUID}/vol${i} /media/disks/${UUID}_vol${i} none bind 0 0" | tee -a /etc/fstab
 done
 
 echo "NVMe SSD provisioning is done and I will go to sleep now"
