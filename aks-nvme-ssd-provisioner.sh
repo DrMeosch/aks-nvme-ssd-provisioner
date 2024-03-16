@@ -62,5 +62,8 @@ for i in $(seq 1 100); do
   echo "/media/${UUID}/vol${i} /media/disks/${UUID}_vol${i} none bind 0 0" | tee -a /etc/fstab
 done
 
+mkdir -p /media/${UUID}/indexer
+mkdir -p /media/${UUID}/searchhead
+
 echo "NVMe SSD provisioning is done and I will go to sleep now"
 #sleep infinity
