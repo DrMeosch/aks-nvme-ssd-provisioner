@@ -53,17 +53,25 @@ echo "UUID=$UUID /media/$UUID ext4 defaults 0 2" | tee -a /etc/fstab
 echo "Device $DEVICE has been mounted to /media/$UUID"
 
 # https://github.com/kubernetes-sigs/sig-storage-local-static-provisioner/blob/master/docs/operations.md#sharing-a-disk-filesystem-by-multiple-filesystem-pvs
-for i in $(seq 1 100); do
-  mkdir -p /media/${UUID}/vol${i} /media/disks/${UUID}_vol${i}
-  mount --bind /media/${UUID}/vol${i} /media/disks/${UUID}_vol${i}
-done
+# for i in $(seq 1 100); do
+#   mkdir -p /media/${UUID}/vol${i} /media/disks/${UUID}_vol${i}
+#   mount --bind /media/${UUID}/vol${i} /media/disks/${UUID}_vol${i}
+# done
+# 
+# for i in $(seq 1 100); do
+#   echo "/media/${UUID}/vol${i} /media/disks/${UUID}_vol${i} none bind 0 0" | tee -a /etc/fstab
+# done
 
-for i in $(seq 1 100); do
-  echo "/media/${UUID}/vol${i} /media/disks/${UUID}_vol${i} none bind 0 0" | tee -a /etc/fstab
-done
+mkdir -p /media/${UUID}/indexer || exit 0
+mkdir -p /media/${UUID}/search-head || exit 0
+mkdir -p /media/indexer || exit 0
+mkdir -p /media/search-head || exit 0
 
-mkdir -p /media/${UUID}/indexer
-mkdir -p /media/${UUID}/searchhead
+mount --bind /media/${UUID}/indexer /media/indexer
+mount --bind /media/${UUID}/search-head /media/search-head
+
+echo "/media/${UUID}/indexer /media/indexer none bind 0 0" | tee -a /etc/fstab
+echo "/media/${UUID}/search-head /media/search-head none bind 0 0" | tee -a /etc/fstab
 
 echo "NVMe SSD provisioning is done and I will go to sleep now"
 #sleep infinity
