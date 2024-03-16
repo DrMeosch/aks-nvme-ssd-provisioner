@@ -66,6 +66,7 @@ mkdir -p /media/${UUID}/indexer || exit 0
 mkdir -p /media/${UUID}/search-head || exit 0
 mkdir -p /media/indexer || exit 0
 mkdir -p /media/search-head || exit 0
+mkdir -p /media/disks
 
 mount --bind /media/${UUID}/indexer /media/indexer
 mount --bind /media/${UUID}/search-head /media/search-head
