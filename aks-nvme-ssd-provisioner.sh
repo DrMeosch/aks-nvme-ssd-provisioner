@@ -18,8 +18,9 @@ if [[ "$(ls -A /media/disks)" ]]
 then
   echo 'Volumes already present in "/media/disks"'
   echo -e "\n$(ls -Al /media/disks | tail -n +2)\n"
-  echo "I assume that provisioning already happend, doing nothing!"
-  sleep infinity
+  echo "I assume that provisioning already happend, exiting.."
+  exit 0
+  # sleep infinity
 fi
 
 # Perform provisioning based on nvme device count
